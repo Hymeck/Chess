@@ -43,10 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessGame.cs" />
+    <Compile Include="Constants\WhiteCastlingSquares.cs" />
     <Compile Include="Domain\Board.cs" />
     <Compile Include="Movement\MoveSummary.cs" />
     <Compile Include="Movement\PieceMovement.cs" />
-    <Compile Include="Constants\CastlingSquares.cs" />
+    <Compile Include="Constants\BlackCastlingSquares.cs" />
     <Compile Include="Exceptions\Exceptions.cs" />
     <Compile Include="Support\PieceFactory.cs" />
     <Compile Include="Support\Checker.cs" />

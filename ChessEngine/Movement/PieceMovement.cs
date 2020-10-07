@@ -56,12 +56,12 @@ namespace ChessEngine.Movement
 
             var isWhite = piece.color.IsWhite();
             var startQueensideSquare = isWhite ?
-                CastlingSquares.WhiteQueensideRookStartSquare :
-                CastlingSquares.BlackQueensideRookStartSquare;
+                WhiteCastlingSquares.QueensideRookStartSquare :
+                BlackCastlingSquares.QueensideRookStartSquare;
 
             var startKingsideSquare = isWhite ?
-                CastlingSquares.WhiteKingsideRookStartSquare :
-                CastlingSquares.BlackKingsideRookStartSquare;
+                WhiteCastlingSquares.KingsideRookStartSquare :
+                BlackCastlingSquares.KingsideRookStartSquare;
 
             var isQueensideRookMoving =
                 from == startQueensideSquare;
@@ -176,58 +176,32 @@ namespace ChessEngine.Movement
             
 
             return MoveSummaryBuilder.DefaultMoveSummary(false, false, Square.NoneSquare);
-            //var isAnyPieceBetween = Checker.IsAnyPieceBetween(board, from, to);
-            //if (isAnyPieceBetween)
-            //    return false;
-
-            //var isKingWhite = kingColor.IsWhite();
-
-            //var kingStartSquare = GetKingStartSquare(isKingWhite);
-            //if (kingStartSquare != from)
-            //    return false;
-
-            //var isQueensideDirection = IsQueensideDirection(isKingWhite, to);
-            //var isKingsideDirection = IsKingsideDirection(isKingWhite, to);
-
-            //if (!isQueensideDirection && !isKingsideDirection)
-            //    return false;
-
-            //var rookStartSquare = isQueensideDirection ?
-            //    GetQueensideRookStartSquare(isKingWhite) :
-            //    GetKingsideRookStartSquare(isKingWhite);
-            //var piece = board[rookStartSquare];
-
-            //return 
-            //    piece.IsNone()?
-            //    false :
-            //    piece.color == kingColor &&
-            //    piece.type == PieceType.Rook;
         }
 
         private static Square GetKingStartSquare(bool isKingWhite) =>
             isKingWhite ?
-            CastlingSquares.WhiteKingStartSquare :
-            CastlingSquares.BlackKingStartSquare;
+            WhiteCastlingSquares.KingStartSquare :
+            BlackCastlingSquares.KingStartSquare;
 
         private static bool IsQueensideDirection(bool isKingWhite, Square square) =>
             isKingWhite ?
-            CastlingSquares.WhiteQueensideKingEndSquare == square :
-            CastlingSquares.BlackQueensideKingEndSquare == square;
+            WhiteCastlingSquares.QueensideKingEndSquare == square :
+            BlackCastlingSquares.QueensideKingEndSquare == square;
 
         private static bool IsKingsideDirection(bool isKingWhite, Square square) =>
             isKingWhite ?
-            CastlingSquares.WhiteKingsideKingEndSquare == square :
-            CastlingSquares.BlackKingsideKingEndSquare == square;
+            WhiteCastlingSquares.KingsideKingEndSquare == square :
+            BlackCastlingSquares.KingsideKingEndSquare == square;
 
         private static Square GetQueensideRookStartSquare(bool isWhite) =>
             isWhite ?
-            CastlingSquares.WhiteQueensideRookStartSquare :
-            CastlingSquares.BlackQueensideRookStartSquare;
+            WhiteCastlingSquares.QueensideRookStartSquare :
+            BlackCastlingSquares.QueensideRookStartSquare;
 
         private static Square GetKingsideRookStartSquare(bool isWhite) =>
             isWhite ?
-            CastlingSquares.WhiteKingsideRookStartSquare :
-            CastlingSquares.BlackKingsideRookStartSquare;
+            WhiteCastlingSquares.KingsideRookStartSquare :
+            BlackCastlingSquares.KingsideRookStartSquare;
     }
 
     internal static class PawnMovement

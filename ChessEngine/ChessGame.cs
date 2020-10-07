@@ -43,8 +43,8 @@ namespace ChessEngine
             HasBlackQueensideRookMoved = false;
             HasBlackKingsideRookMoved = false;
             MoveCount = 1;
-            WhiteKingSquare = CastlingSquares.WhiteKingStartSquare;
-            BlackKingSquare = CastlingSquares.BlackKingStartSquare;
+            WhiteKingSquare = WhiteCastlingSquares.KingStartSquare;
+            BlackKingSquare = BlackCastlingSquares.KingStartSquare;
 
             var (whitePieces, blackPieces) = GetPieces(Board);
             WhitePieces = whitePieces;

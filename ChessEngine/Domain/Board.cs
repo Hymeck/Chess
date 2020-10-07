@@ -1,6 +1,7 @@
 ﻿using ChessEngine.Movement;
 using ChessEngine.Support;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessEngine.Domain
 {
@@ -20,21 +21,19 @@ namespace ChessEngine.Domain
         public static Board GetStartBoard()
         {
             var map = GetStartMap();
-            //var map = GetTestMap();
+            // var map = GetTestMap();
             return new Board(map);
         }
 
         internal bool CanCaptureKing(ChessGame game, Square kingSquare)
         {
             var enemyPieces = game.GetPieces(game.ActiveColor.GetReversedColor());
-            foreach (var p in enemyPieces)
-            {
-                var moveSummary = Rules.CanPieceMove(game, p.Value, this, p.Key, kingSquare);
-                if (moveSummary.IsMovePossible && moveSummary.IsCapturing)
-                    return true;
-            }
-
-            return false;
+            var canCaptureKing = enemyPieces.Any(
+                p =>
+                    Rules.CanPieceMove(game, p.Value, this, p.Key, kingSquare).IsMovePossible &&
+                    Rules.CanPieceMove(game, p.Value, this, p.Key, kingSquare).IsCapturing);
+            
+            return canCaptureKing;
         }
 
         internal bool IsCheckAfterMove(
@@ -59,11 +58,9 @@ namespace ChessEngine.Domain
                 for (int x = 0; x < 8; x++)
                     map.Add(new Square(x, 7 - y), Piece.NonePiece);
 
-            map[new Square(3, 7)] = PieceFactory.BlackQueen();
-            map[new Square(4, 7)] = PieceFactory.BlackKing();
-            map[new Square(3, 0)] = PieceFactory.WhiteQueen();
-
-            map[new Square(4, 0)] = PieceFactory.WhiteKing();
+            map[new Square(0, 0)] = PieceFactory.WhiteKing();
+            map[new Square(1, 2)] = PieceFactory.BlackRook();
+            
             return map;
         }
 
@@ -175,14 +172,9 @@ namespace ChessEngine.Domain
             return nextBoard;
         }
 
-        private static Dictionary<Square, Piece> CopyMap(Board board)
-        {
-            var map = new Dictionary<Square, Piece>(64);
-
-            foreach (var s in board.map)
-                map.Add(s.Key, s.Value);
-
-            return map;
-        }
+        private static Dictionary<Square, Piece> CopyMap(Board board) =>
+            board.map.ToDictionary(
+                pair => pair.Key,
+                pair => pair.Value);
     }
 }

@@ -11,12 +11,13 @@ namespace ChessEngine.Domain
     public static class ColorExtensions
     {
         public static Color GetReversedColor(this Color color) =>
-            color == Color.None ?
-            color : (color == Color.White ? Color.Black : Color.White);
+            color == Color.White ? 
+                Color.Black : 
+                color == Color.Black ?
+                    Color.White : Color.None;
 
         public static bool IsWhite(this Color color) =>
-            color == Color.None || color == Color.Black ?
-            false : true;
+            color == Color.White;
     }
 
     public enum PieceType
