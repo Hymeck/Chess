@@ -1,4 +1,5 @@
 ﻿using System;
+using ChessEngine.Support;
 using ChessEngine.Domain;
 
 namespace ChessEngine.Support

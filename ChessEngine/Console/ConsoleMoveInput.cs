@@ -1,5 +1,5 @@
-﻿using ChessEngine.Domain;
-using System;
+﻿using System;
+using ChessEngine.Domain;
 
 namespace ChessEngine.Console
 {

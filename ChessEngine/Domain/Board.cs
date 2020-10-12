@@ -1,7 +1,7 @@
-﻿using ChessEngine.Movement;
-using ChessEngine.Support;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using ChessEngine.Movement;
+using ChessEngine.Support;
 
 namespace ChessEngine.Domain
 {

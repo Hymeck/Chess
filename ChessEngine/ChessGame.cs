@@ -1,10 +1,10 @@
-﻿using ChessEngine.Constants;
-using ChessEngine.Domain;
-using ChessEngine.Exceptions;
-using ChessEngine.Movement;
+﻿using ChessEngine.Exceptions;
 using ChessEngine.Support;
 using System;
 using System.Collections.Generic;
+using ChessEngine.Constants;
+using ChessEngine.Domain;
+using ChessEngine.Movement;
 
 namespace ChessEngine
 {

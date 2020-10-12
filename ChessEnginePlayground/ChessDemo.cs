@@ -1,9 +1,9 @@
-﻿using static System.Console;
-using ChessEngine;
-using ChessEngine.Domain;
+﻿using ChessEngine;
 using ChessEngine.Console;
+using ChessEngine.Domain;
+using static System.Console;
 
-namespace ChessEnginePlayground
+namespace ChessEngineCorePlayground
 {
     class ChessDemo
     {
