@@ -1,10 +1,10 @@
-﻿using ChessEngine.Constants;
-using ChessEngine.Domain;
-using ChessEngine.Exceptions;
-using ChessEngine.Movement;
+﻿using ChessEngine.Exceptions;
 using ChessEngine.Support;
 using System;
 using System.Collections.Generic;
+using ChessEngine.Constants;
+using ChessEngine.Domain;
+using ChessEngine.Movement;
 
 namespace ChessEngine
 {
@@ -131,7 +131,7 @@ namespace ChessEngine
             {
                 if (!p.Value.IsNone())
                 {
-                    if (p.Value.color.IsWhite())
+                    if (p.Value.Color.IsWhite())
                         whitePieces.Add(p.Key, p.Value);
                     else
                         blackPieces.Add(p.Key, p.Value);
@@ -341,7 +341,7 @@ namespace ChessEngine
         public IEnumerable<string> YieldMoves()
         {
             foreach (var (from, to) in YieldPossibleMoves())
-                yield return from.ToString() + to.ToString();
+                yield return from.Name + to.Name;
         }
     }
 }
