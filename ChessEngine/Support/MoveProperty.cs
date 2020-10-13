@@ -10,17 +10,17 @@ namespace ChessEngine.Support
     internal static class MoveProperty
     {
         public static int DeltaX(Square from, Square to) =>
-            to.x - from.x;
+            to.X - from.X;
         public static int DeltaY(Square from, Square to) =>
-            to.y - from.y;
+            to.Y - from.Y;
         public static int AbsDeltaX(Square from, Square to) =>
-            Math.Abs(from.x - to.x);
+            Math.Abs(from.X - to.X);
         public static int AbsDeltaY(Square from, Square to) =>
-            Math.Abs(from.y - to.y);
+            Math.Abs(from.Y - to.Y);
         public static int SignX(Square from, Square to) =>
-            Math.Sign(from.x - to.x);
+            Math.Sign(from.X - to.X);
         public static int SignY(Square from, Square to) =>
-            Math.Sign(from.y - to.y);
+            Math.Sign(from.Y - to.Y);
         public static bool IsDiagonalLine(Square from, Square to) =>
             AbsDeltaX(from, to) != 0 &&
             AbsDeltaX(from, to) == AbsDeltaY(from, to);

@@ -4,39 +4,19 @@ namespace ChessEngine.Movement
 {
     internal static class Rules
     {
-        public static MoveSummary CanPieceMove(ChessGame game, Piece piece, Board board, Square from, Square to)
-        {
-            var moveSummary = MoveSummaryBuilder.NoneMoveSummary();
-            
-            var type = piece.type;
-            switch (type)
+        public static MoveSummary CanPieceMove(
+            ChessGame game,
+            Piece piece, Board board,
+            Square from, Square to) =>
+            piece.Type switch
             {
-                case PieceType.Pawn:
-                    moveSummary = PawnMovement.CanPawnMove(game, piece.color, board, from, to);
-                    break;
-
-                case PieceType.Knight:
-                    moveSummary = KnightMovement.CanKnightMove(board, from, to);
-                    break;
-
-                case PieceType.Bishop:
-                    moveSummary = BishopMovement.CanBishopMove(board, from, to);
-                    break;
-
-                case PieceType.Rook:
-                    moveSummary = RookMovement.CanRookMove(board, from, to);
-                    break;
-
-                case PieceType.Queen:
-                    moveSummary = QueenMovement.CanQueenMove(board, from, to);
-                    break;
-
-                case PieceType.King:
-                    moveSummary = KingMovement.CanKingMove(game, piece.color, board, from, to);
-                    break;
-            }
-
-            return moveSummary;
-        }
+                PieceType.Pawn => PawnMovement.CanPawnMove(game, piece.Color, board, @from, to),
+                PieceType.Knight => KnightMovement.CanKnightMove(board, @from, to),
+                PieceType.Bishop => BishopMovement.CanBishopMove(board, @from, to),
+                PieceType.Rook => RookMovement.CanRookMove(board, @from, to),
+                PieceType.Queen => QueenMovement.CanQueenMove(board, @from, to),
+                PieceType.King => KingMovement.CanKingMove(game, piece.Color, board, @from, to),
+                _ => MoveSummaryBuilder.NoneMoveSummary()
+            };
     }
 }

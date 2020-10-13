@@ -142,29 +142,29 @@ namespace ChessEngine.Domain
             if (moveSummary.IsEnPassant)
             {
                 var stepY = MoveProperty.DeltaY(from, to) < 0 ? 1 : -1;
-                var enemyPawnSquare = new Square(to.x, to.y + stepY);
+                var enemyPawnSquare = new Square(to.X, to.Y + stepY);
                 map[enemyPawnSquare] = Piece.NonePiece;
             }
 
             if (moveSummary.IsKingCastleQueenside)
             {
-                var rookSquare = new Square(0, to.y);
+                var rookSquare = new Square(0, to.Y);
 
                 var rook = map[rookSquare];
                 map[rookSquare] = Piece.NonePiece;
 
-                var newRookSquare = new Square(3, to.y);
+                var newRookSquare = new Square(3, to.Y);
                 map[newRookSquare] = rook;
             }
 
             if (moveSummary.IsKingCastleKingside)
             {
-                var rookSquare = new Square(7, to.y);
+                var rookSquare = new Square(7, to.Y);
 
                 var rook = map[rookSquare];
                 map[rookSquare] = Piece.NonePiece;
 
-                var newRookSquare = new Square(5, to.y);
+                var newRookSquare = new Square(5, to.Y);
                 map[newRookSquare] = rook;
             }
 

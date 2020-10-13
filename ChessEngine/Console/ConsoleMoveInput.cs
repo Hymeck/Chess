@@ -14,8 +14,8 @@ namespace ChessEngine.Console
             if (!IsValidDigit(move[1]) || !IsValidDigit(move[3]))
                 throw new FormatException("Digit from '1' to '8'");
             // todo: check promotion letter
-            return (SquareMethods.FromString(move.Substring(0, 2)),
-                SquareMethods.FromString(move.Substring(2, 2)));
+            return (Square.FromString(move.Substring(0, 2)),
+                Square.FromString(move.Substring(2, 2)));
         }
 
         private static bool IsValidLetter(char c) =>

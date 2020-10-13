@@ -36,37 +36,20 @@ namespace ChessEngine.Domain
         public static char ToChar(this PieceType pieceType) => (char)pieceType;
     }
 
-    public struct Piece
+    public record Piece
     {
         public static readonly Piece NonePiece = new Piece(Color.None, PieceType.None);
 
-        public readonly Color color;
-        public readonly PieceType type;
+        public Color Color { get; init; }
+        public PieceType Type { get; init; }
 
-        public Piece(Color color, PieceType type)
-        {
-            this.color = color;
-            this.type = type;
-        }
+        public Piece(Color color, PieceType type) =>
+            (Color, Type) = (color, type);
 
-        public override string ToString() =>
-            PieceMethods.GetStringPieceName(this);
-
+        public string Name =>
+            Color.IsWhite() ? Type.ToChar().ToString() : char.ToLower(Type.ToChar()).ToString();
+        
         public bool IsNone() =>
-            PieceMethods.IsPieceNone(this);
-    }
-
-    public static class PieceMethods
-    {
-        public static char GetCharPieceName(Piece piece) =>
-            piece.color.IsWhite() ?
-            piece.type.ToChar() : char.ToLower(piece.type.ToChar());
-
-        public static string GetStringPieceName(Piece piece) =>
-            GetCharPieceName(piece).ToString();
-
-        public static bool IsPieceNone(Piece piece) =>
-            piece.color == Piece.NonePiece.color &&
-            piece.type == Piece.NonePiece.type;
+            this == NonePiece;
     }
 }

@@ -8,7 +8,7 @@ namespace ChessEngine.Movement
     {
         public static MoveSummary CanKnightMove(Board board, Square from, Square to)
         {
-            var isSameColor = board[from].color == board[to].color;
+            var isSameColor = board[from].Color == board[to].Color;
             var isCapturing = board[to].IsNone() ?
                 false :
                 !isSameColor;
@@ -24,7 +24,7 @@ namespace ChessEngine.Movement
     {
         public static MoveSummary CanBishopMove(Board board, Square from, Square to)
         {
-            var isSameColor = board[from].color == board[to].color;
+            var isSameColor = board[from].Color == board[to].Color;
             var isCapturing = board[to].IsNone() ?
                 false :
                 !isSameColor;
@@ -43,7 +43,7 @@ namespace ChessEngine.Movement
         {
             //throw new NotImplementedException("CanRookMove");
             var piece = board[from];
-            var isSameColor = board[from].color == board[to].color;
+            var isSameColor = board[from].Color == board[to].Color;
             var isCapturing = board[to].IsNone() ?
                 false :
                 !isSameColor;
@@ -54,7 +54,7 @@ namespace ChessEngine.Movement
                 MoveProperty.IsVerticalLine(from, to),
                 board, from, to);
 
-            var isWhite = piece.color.IsWhite();
+            var isWhite = piece.Color.IsWhite();
             var startQueensideSquare = isWhite ?
                 WhiteCastlingSquares.QueensideRookStartSquare :
                 BlackCastlingSquares.QueensideRookStartSquare;
@@ -78,7 +78,7 @@ namespace ChessEngine.Movement
     {
         public static MoveSummary CanQueenMove(Board board, Square from, Square to)
         {
-            var isSameColor = board[from].color == board[to].color;
+            var isSameColor = board[from].Color == board[to].Color;
             var isCapturing = board[to].IsNone() ?
                 false :
                 !isSameColor;
@@ -98,7 +98,7 @@ namespace ChessEngine.Movement
     {
         public static MoveSummary CanKingMove(ChessGame game, Color kingColor, Board board, Square from, Square to)
         {
-            var isSameColor = board[from].color == board[to].color;
+            var isSameColor = board[from].Color == board[to].Color;
             var isCapturing = board[to].IsNone() ?
                 false :
                 !isSameColor;
@@ -165,8 +165,8 @@ namespace ChessEngine.Movement
 
                         var isValid =
                             !hasRookMoved &&
-                            piece.color == kingColor &&
-                            piece.type == PieceType.Rook;
+                            piece.Color == kingColor &&
+                            piece.Type == PieceType.Rook;
                         if (isValid)
                             return MoveSummaryBuilder.
                                 KingSummary(false, true, isQueensideDirection, isKingsideDirection, Square.NoneSquare);
@@ -174,7 +174,6 @@ namespace ChessEngine.Movement
                 }
             }
             
-
             return MoveSummaryBuilder.DefaultMoveSummary(false, false, Square.NoneSquare);
         }
 
@@ -225,7 +224,7 @@ namespace ChessEngine.Movement
                 isMovePossible = true;
 
                 var promotionRow = GetPawnPromotionRow(pawnColor);
-                if (to.y == promotionRow)
+                if (to.Y == promotionRow)
                     canPromote = true;
             }
 
@@ -234,7 +233,7 @@ namespace ChessEngine.Movement
             {
                 isMovePossible = true;
 
-                enPassantTargetSquare = new Square(from.x, from.y + GetPawnStep(pawnColor));
+                enPassantTargetSquare = new Square(from.X, from.Y + GetPawnStep(pawnColor));
             }
 
             var canCapture = CanCapture(pawnColor, board, from, to);
@@ -244,7 +243,7 @@ namespace ChessEngine.Movement
                 isCapturing = true;
 
                 var promotionRow = GetPawnPromotionRow(pawnColor);
-                if (to.y == promotionRow)
+                if (to.Y == promotionRow)
                     canPromote = true;
             }
             var capturedPieceSquare = isCapturing ? to : Square.NoneSquare;
@@ -259,8 +258,8 @@ namespace ChessEngine.Movement
                 isCapturing = true;
                 isEnPassant = true;
                 capturedPieceSquare = new Square(
-                    game.EnPassantTargetSquare.x,
-                    game.EnPassantTargetSquare.y + GetPawnStep(pawnColor));
+                    game.EnPassantTargetSquare.X,
+                    game.EnPassantTargetSquare.Y + GetPawnStep(pawnColor));
             }
 
             return
@@ -293,9 +292,9 @@ namespace ChessEngine.Movement
             var row = GetPawnStartRow(pawnColor);
             var step = GetPawnStep(pawnColor);
             return
-                row == from.y &&
+                row == from.Y &&
                 board[to].IsNone() &&
-                board[new Square(from.x, from.y + step)].IsNone() &&
+                board[new Square(from.X, from.Y + step)].IsNone() &&
                 MoveProperty.DeltaX(from, to) == 0 &&
                 MoveProperty.DeltaY(from, to) == 2 * step;
         }
