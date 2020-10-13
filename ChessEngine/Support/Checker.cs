@@ -1,4 +1,5 @@
 ﻿using System;
+using ChessEngine.Support;
 using ChessEngine.Domain;
 
 namespace ChessEngine.Support
@@ -12,8 +13,8 @@ namespace ChessEngine.Support
             from == to;
         
         public static bool IsValidColors(Color activeColor, Piece activePiece, Piece enemyPiece) =>
-            activePiece.color == activeColor &&
-            activePiece.color != enemyPiece.color;
+            activePiece.Color == activeColor &&
+            activePiece.Color != enemyPiece.Color;
 
         public static bool IsAnyPieceBetween(Board board, Square from, Square to)
         {
@@ -21,11 +22,11 @@ namespace ChessEngine.Support
             var stepX = MoveProperty.SignX(from, to);
             var stepY = MoveProperty.SignY(from, to);
 
-            var tempFrom = new Square(from.x, from.y);
+            var tempFrom = new Square(from.X, from.Y);
             while (true)
             {
                 // beware: plus or minus step*
-                tempFrom = new Square(tempFrom.x - stepX, tempFrom.y - stepY);
+                tempFrom = new Square(tempFrom.X - stepX, tempFrom.Y - stepY);
 
                 if (tempFrom == to)
                     return false;
@@ -42,10 +43,10 @@ namespace ChessEngine.Support
             var stepX = MoveProperty.SignX(from, to);
             var stepY = MoveProperty.SignY(from, to);
 
-            var tempFrom = new Square(from.x, from.y);
+            var tempFrom = new Square(from.X, from.Y);
             while (true)
             {
-                tempFrom = new Square(tempFrom.x - stepX, tempFrom.y - stepY);
+                tempFrom = new Square(tempFrom.X - stepX, tempFrom.Y - stepY);
 
                 if (tempFrom == to)
                     return true;

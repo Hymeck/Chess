@@ -2,7 +2,7 @@
 
 namespace ChessEngine.Movement
 {
-    internal struct MoveSummary
+    internal record MoveSummary
     {
         // common
         public readonly bool IsMovePossible;
