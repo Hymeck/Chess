@@ -4,7 +4,7 @@ using ChessEngine.Domain;
 using ChessEnginePlayground;
 using static System.Console;
 
-namespace ChessEngineCorePlayground
+namespace ChessEnginePlayground
 {
     class ChessDemo
     {
