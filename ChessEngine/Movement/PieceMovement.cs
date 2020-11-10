@@ -205,7 +205,6 @@ namespace ChessEngine.Movement
 
     internal static class PawnMovement
     {
-        // TODO: en passant
         public static MoveSummary CanPawnMove(
             ChessGame game,
             Color pawnColor,
@@ -250,7 +249,6 @@ namespace ChessEngine.Movement
             var canEnPassant = CanEnPassantCapture(
                 game, 
                 pawnColor,
-                //board, 
                 from, to);
             if (canEnPassant)
             {
@@ -316,7 +314,6 @@ namespace ChessEngine.Movement
         private static bool CanEnPassantCapture(
             ChessGame game,
             Color pawnColor,
-            //Board board,
             Square from, Square to)
         {
             if (game.EnPassantTargetSquare.IsNone())

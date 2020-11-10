@@ -20,7 +20,8 @@ namespace ChessEngine.Domain
     {
         public static Board GetStartBoard()
         {
-            var map = GetStartMap();
+            // var map = GetStartMap();
+            var map = PieceSerializer.GetMap();
             // var map = GetTestMap();
             return new Board(map);
         }
@@ -133,7 +134,6 @@ namespace ChessEngine.Domain
         {
             if (!moveSummary.IsMovePossible)
                 return currentBoard;
-            // TODO: correct mistake with determination of castling direction in KingMovement's CanCastle
             var map = CopyMap(currentBoard);
 
             map[from] = Piece.NonePiece;

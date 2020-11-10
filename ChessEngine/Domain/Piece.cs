@@ -51,5 +51,7 @@ namespace ChessEngine.Domain
         
         public bool IsNone() =>
             this == NonePiece;
-    }
+
+        public static Piece FromChar(char p) =>
+            char.IsUpper(p) ? new Piece(Color.White, (PieceType) p) : new Piece(Color.Black, (PieceType) p); }
 }
