@@ -9,7 +9,7 @@ namespace ChessEngine.Domain
     {
         public readonly Dictionary<Square, Piece> map;
 
-        private Board(Dictionary<Square, Piece> map) =>
+        internal Board(Dictionary<Square, Piece> map) =>
             this.map = map;
 
         public Piece this[Square square] => map[square];
@@ -20,8 +20,8 @@ namespace ChessEngine.Domain
     {
         public static Board GetStartBoard()
         {
-            // var map = GetStartMap();
-            var map = PieceSerializer.GetMap();
+            var map = GetStartMap();
+            // var map = PieceSerializer.FromFen();
             // var map = GetTestMap();
             return new Board(map);
         }

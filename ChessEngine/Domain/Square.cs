@@ -20,6 +20,8 @@
         
         public static Square FromString(string square)
         {
+            if (square == "-" || square.Length != 2)
+                return NoneSquare;
             var x = square[0] - 'a';
             var y = square[1] - '1';
             return new Square(x, y);

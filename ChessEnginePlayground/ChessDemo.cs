@@ -10,7 +10,8 @@ namespace ChessEnginePlayground
     {
         static void Main(string[] args)
         {
-            ConsoleGameLoop gameLoop = new ConsoleGameLoop();
+            var game = new ChessGame("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            var gameLoop = new ConsoleGameLoop(game);
             gameLoop.Play();
             ReadKey();
         }

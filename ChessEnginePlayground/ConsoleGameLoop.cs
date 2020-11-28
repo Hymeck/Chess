@@ -6,8 +6,13 @@ namespace ChessEnginePlayground
 {
     public sealed class ConsoleGameLoop
     {
-        private ChessGame game = new ChessGame();
+        private ChessGame game;
         private readonly GameHandler handler = new GameHandler();
+
+        public ConsoleGameLoop() =>
+            game = new ChessGame();
+        public ConsoleGameLoop(ChessGame game) => 
+            this.game = game;
 
         public void Play()
         {

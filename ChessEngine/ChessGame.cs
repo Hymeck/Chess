@@ -13,7 +13,7 @@ namespace ChessEngine
         public readonly Board Board;
         public readonly Color ActiveColor;
         public readonly Square EnPassantTargetSquare;
-        public int MoveCount;
+        public readonly int MoveCount;
 
         internal readonly bool HasWhiteKingMoved;
         internal readonly bool HasBlackKingMoved;
@@ -31,25 +31,11 @@ namespace ChessEngine
         private readonly Dictionary<Square, Piece> BlackPieces;
 
         #region ChessGame ctor
-        public ChessGame()
-        {
-            Board = Board.GetStartBoard();
-            ActiveColor = Color.White;
-            EnPassantTargetSquare = Square.NoneSquare;
-            HasWhiteKingMoved = false;
-            HasBlackKingMoved = false;
-            HasWhiteQueensideRookMoved = false;
-            HasWhiteKingsideRookMoved = false;
-            HasBlackQueensideRookMoved = false;
-            HasBlackKingsideRookMoved = false;
-            MoveCount = 1;
-            WhiteKingSquare = WhiteCastlingSquares.KingStartSquare;
-            BlackKingSquare = BlackCastlingSquares.KingStartSquare;
-
-            var (whitePieces, blackPieces) = GetPieces(Board);
-            WhitePieces = whitePieces;
-            BlackPieces = blackPieces;
-        }
+        public ChessGame() : this(Board.GetStartBoard(), Color.White, Square.NoneSquare,
+            hasWhiteKingMoved: false, hasBlackKingMoved: false, 1,
+            hasWhiteQueensideRookMoved: false, hasWhiteKingsideRookMoved: false,
+            hasBlackQueensideRookMoved: false, hasBlackKingsideRookMoved: false,
+            WhiteCastlingSquares.KingStartSquare, BlackCastlingSquares.KingStartSquare) {}
         #endregion ChessGame ctor
 
         #region ChessGame ctor with parameters
@@ -60,9 +46,7 @@ namespace ChessEngine
             int moveCount,
             bool hasWhiteQueensideRookMoved, bool hasWhiteKingsideRookMoved,
             bool hasBlackQueensideRookMoved, bool hasBlackKingsideRookMoved,
-            Square whiteKingSquare, Square blackKingSquare,
-            Dictionary<Square, Piece> whitePieces,
-            Dictionary<Square, Piece> blackPieces)
+            Square whiteKingSquare, Square blackKingSquare)
         {
             Board = board;
             ActiveColor = activeColor;
@@ -79,11 +63,34 @@ namespace ChessEngine
             WhiteKingSquare = whiteKingSquare;
             BlackKingSquare = blackKingSquare;
 
+            var (whitePieces, blackPieces) = GetPieces(Board);
             WhitePieces = whitePieces;
             BlackPieces = blackPieces;
         }
         #endregion ChessGame ctor with parameters
 
+        #region ChessGame ctor with fen parameter
+        public ChessGame(string fen)
+        {
+            var parts = fen.Split();
+            PieceSerializer.ParseBoard(parts[0], out WhiteKingSquare, out BlackKingSquare, out Board);
+            ActiveColor = PieceSerializer.ToColor(parts[1]);
+            var (hasWhiteKingMoved, hasBlackKingMoved, hasWhiteQueensideRookMoved, hasWhiteKingsideRookMoved, hasBlackQueensideRookMoved, hasBlackKingsideRookMoved) = PieceSerializer.ParseCastlings(parts[2]);
+            HasWhiteKingMoved = hasWhiteKingMoved;
+            HasBlackKingMoved = hasBlackKingMoved;
+            HasWhiteQueensideRookMoved = hasWhiteQueensideRookMoved;
+            HasWhiteKingsideRookMoved = hasWhiteKingsideRookMoved;
+            HasBlackQueensideRookMoved = hasBlackQueensideRookMoved;
+            HasBlackKingsideRookMoved = hasBlackKingsideRookMoved;
+            EnPassantTargetSquare = PieceSerializer.ToSquare(parts[3]);
+            MoveCount = int.Parse(parts[5]);
+            
+            var (whitePieces, blackPieces) = GetPieces(Board);
+            WhitePieces = whitePieces;
+            BlackPieces = blackPieces;
+        }
+        #endregion ChessGame ctor with fen parameter
+        
         public bool IsCheck =>
             Board.IsCheck(this, GetActualKingSquare());
 
@@ -116,6 +123,9 @@ namespace ChessEngine
                 return possibleMoveCount == 0;
             }
         }
+
+        public override string ToString() => 
+            PieceSerializer.ToFen(this);
     }
 
     public sealed partial class ChessGame
@@ -272,8 +282,6 @@ namespace ChessEngine
 
             var nextBoard = Board.Move(from, to, moveSummary);
 
-            var (whitePieces, blackPieces) = GetPieces(nextBoard);
-
             var nextMoveCount = !isActiveColorWhite ? MoveCount + 1 : MoveCount;
             var enPassantTargetSquare = moveSummary.EnPassantTargetSquare;
 
@@ -300,9 +308,7 @@ namespace ChessEngine
                 hasBlackQueensideRookMoved,
                 hasBlackKingsideRookMoved,
                 whiteKingSquare,
-                blackKingSquare,
-                whitePieces,
-                blackPieces);
+                blackKingSquare);
         }
 
         public IEnumerable<string> YieldPieces()

@@ -3,9 +3,9 @@ namespace ChessEngine.Domain
 {
     public enum Color
     {
-        None,
-        White,
-        Black
+        None = '.',
+        White = 'w',
+        Black = 'b'
     }
 
     public static class ColorExtensions
@@ -18,11 +18,14 @@ namespace ChessEngine.Domain
 
         public static bool IsWhite(this Color color) =>
             color == Color.White;
+        
+        // public static string GetString(this Color color) => c
+        
     }
 
     public enum PieceType
     {
-        None,
+        None = '.',
         Pawn = 'P',
         Knight = 'N',
         Bishop = 'B',
@@ -52,6 +55,12 @@ namespace ChessEngine.Domain
         public bool IsNone() =>
             this == NonePiece;
 
-        public static Piece FromChar(char p) =>
-            char.IsUpper(p) ? new Piece(Color.White, (PieceType) p) : new Piece(Color.Black, (PieceType) p); }
+        public static Piece FromChar(char piece) =>
+            piece switch
+            {
+                'P' or 'N' or 'B' or 'R' or 'Q' or 'K' => new Piece(Color.White, (PieceType) piece),
+                'p' or 'n' or 'b' or 'r' or 'q' or 'k' => new Piece(Color.Black, (PieceType) char.ToUpper(piece)),
+                _ => NonePiece
+            };
+    }
 }
