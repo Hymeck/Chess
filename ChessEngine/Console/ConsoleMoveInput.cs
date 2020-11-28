@@ -7,7 +7,7 @@ namespace ChessEngine.Console
     {
         public static (Square from, Square to) ParseMove(string move)
         {
-            if (move.Length < 4)
+            if (move.Length != 4)
                 throw new FormatException("Input length must be 4");
             if (!IsValidLetter(move[0]) || !IsValidLetter(move[2]))
                 throw new FormatException("Letter from 'a' to 'h'");
