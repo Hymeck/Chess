@@ -10,19 +10,19 @@ namespace ChessEngine.Exceptions
     public sealed class PieceNotFoundException : ChessGameException
     {
         public PieceNotFoundException(Square square) : 
-            base($"Piece on {square} doesn't exist") { }
+            base($"Piece on '{square.Name}' square doesn't exist") { }
     }
 
     public sealed class PieceMoveException : ChessGameException
     {
         public PieceMoveException(Piece piece, Square from, Square to) : 
-            base ($"{piece} can't make '{from.ToString() + to.ToString()}' move") { }
+            base ($"Piece '{piece.Name}' can't make '{from.Name + to.Name}' move") { }
     }
 
     public sealed class ColorException : ChessGameException
     {
         public ColorException(Color activeColor, Color pieceColor, Color enemyColor) : 
-            base($"Piece color ({pieceColor}) doesn't correspond with move color ({activeColor}) or matches with color of piece ({enemyColor}) staying on 'to' square") { }
+            base($"Piece color '{pieceColor}' doesn't correspond with move color '{activeColor}' or matches with color of piece '{enemyColor}' staying on to square") { }
     }
 
     public sealed class SquareException : ChessGameException
@@ -40,6 +40,6 @@ namespace ChessEngine.Exceptions
     public sealed class CheckException : ChessGameException
     {
         public CheckException(Piece piece, Square from, Square to) :
-            base($"Piece ({piece}) can't make specified move ({from.ToString() + to.ToString()}) due to king check") { }
+            base($"Piece '{piece.Name}' can't make specified move '{from.Name + to.Name}' due to king check") { }
     }
 }
