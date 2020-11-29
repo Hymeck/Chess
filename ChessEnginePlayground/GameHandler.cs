@@ -1,27 +1,33 @@
-﻿using System.Collections.Generic;
-using ChessEngine;
+﻿using ChessEngine;
 using ChessEngine.Console;
 using ChessEngine.Domain;
+using ChessEngine.Exceptions;
 using static System.Console;
 
 namespace ChessEnginePlayground
 {
     public sealed class GameHandler
     {
-        // private static readonly Dictionary<string, >
-        public void MakeMove(ref ChessGame game)
+        public int MakeMove(ref ChessGame game)
         {
             moveInput:
             Write("\n > ");
             var move = ReadLine();
             if (move == "" || move == "q" || move == "exit")
-                return;
+                return -1;
             try
             {
                 MakeMove(ref game, move);
                 Clear();
+                return 0;
             }
 
+            catch (ChessGameException e)
+            {
+                WriteLine($" {e.Message}");
+                goto moveInput;
+            }
+            
             catch
             {
                 WriteLine(" Invalid input");

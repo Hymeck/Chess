@@ -18,9 +18,6 @@ namespace ChessEngine.Domain
 
         public static bool IsWhite(this Color color) =>
             color == Color.White;
-        
-        // public static string GetString(this Color color) => c
-        
     }
 
     public enum PieceType
