@@ -28,7 +28,7 @@ namespace ChessEngine.Exceptions
     public sealed class SquareException : ChessGameException
     {
         public SquareException() : 
-            base("Specified squares are out of the board") { }
+            base("Specified square(s) is out of the board") { }
     }
 
     public sealed class EqualSquareException : ChessGameException

@@ -224,7 +224,18 @@ namespace ChessEngine
                 hasBlackQueensideRookMoved,
                 hasBlackKingsideRookMoved);
         }
-
+        
+        /// <summary>
+        /// Makes move
+        /// </summary>
+        /// <param name="moveSquares">tuple of start and end squares</param>
+        /// <exception cref="PieceNotFoundException">Board does not contain piece on start square</exception>
+        /// <exception cref="SquareException">Start or end square does not lie within the board</exception>
+        /// <exception cref="EqualSquareException">Start square equals to end square</exception>
+        /// <exception cref="ColorException">Moving piece matches by color with piece staying on end square or piece does not match with turn color</exception>
+        /// <exception cref="PieceMoveException">Piece move is not made by the rule</exception>
+        /// <exception cref="CheckException">The king is still in check after move</exception>
+        /// <returns>game</returns>
         public ChessGame Move((Square from, Square to) moveSquares) =>
             Move(moveSquares.from, moveSquares.to);
 
@@ -237,38 +248,49 @@ namespace ChessEngine
         private bool IsCheckAfterMove(Square from, Square to, MoveSummary moveSummary) =>
             Board.IsCheckAfterMove(this, GetActualKingSquare(), from, to, moveSummary);
 
+        /// <summary>
+        /// Makes move
+        /// </summary>
+        /// <param name="from">start square</param>
+        /// <param name="to">end square</param>
+        /// <exception cref="PieceNotFoundException">Board does not contain piece on start square</exception>
+        /// <exception cref="SquareException">Start or end square does not lie within the board</exception>
+        /// <exception cref="EqualSquareException">Start square equals to end square</exception>
+        /// <exception cref="ColorException">Moving piece matches by color with piece staying on end square or piece does not match with turn color</exception>
+        /// <exception cref="PieceMoveException">Piece move is not made by the rule</exception>
+        /// <exception cref="CheckException">The king is still in check after move</exception>
         public ChessGame Move(Square from, Square to)
         {
             #region checking with exceptions
             var piece = Board[from];
             if (piece.IsNone())
-                //throw new PieceNotFoundException(from);
-                return this;
+                throw new PieceNotFoundException(from);
+                // return this;
 
             var areSquareOnBoard = Checker.AreSquaresOnBoard(from, to);
             if (!areSquareOnBoard)
-                //throw new SquareException();
-                return this;
+                throw new SquareException();
+                // return this;
 
             var areSquaresEqual = Checker.AreSquaresEqual(from, to);
             if (areSquaresEqual)
-                //throw new EqualSquareException();
-                return this;
+                throw new EqualSquareException();
+                // return this;
 
             var isValidColor = Checker.IsValidColors(ActiveColor, piece, Board.map[to]);
             if (!isValidColor)
-                //throw new ColorException(ActiveColor, piece.color, Board.map[to].color);
-                return this;
+                throw new ColorException(ActiveColor, piece.Color, Board.map[to].Color);
+                // return this;
 
             var moveSummary = Rules.CanPieceMove(this, piece, Board, from, to);
             if (!moveSummary.IsMovePossible)
-                //throw new PieceMoveException(piece, from, to);
-                return this;
+                throw new PieceMoveException(piece, from, to);
+                // return this;
 
             var isCheckAfterMove = IsCheckAfterMove(from, to, moveSummary);
             if (isCheckAfterMove)
-                //throw new CheckException(piece, from, to);
-                return this;
+                throw new CheckException(piece, from, to);
+                // return this;
             #endregion checking with exceptions
             // pawn:
             // promotion -> ???

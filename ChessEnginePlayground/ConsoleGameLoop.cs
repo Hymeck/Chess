@@ -23,7 +23,7 @@ namespace ChessEnginePlayground
                 handler.PrintGameState(game); 
                 var result = handler.MakeMove(ref game);
                 if (result == -1)
-                    return;
+                    break;
             }
             End();
         }

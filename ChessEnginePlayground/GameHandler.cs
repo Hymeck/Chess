@@ -36,7 +36,7 @@ namespace ChessEnginePlayground
         }
         public void MakeMove(ref ChessGame game, string move)
         {
-            var (from, to) = ConsoleMoveInput.ParseMove(move);
+            var (from, to) = MoveInputParser.ParseMove(move);
             game = game.Move(from, to);
         }
 

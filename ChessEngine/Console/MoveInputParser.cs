@@ -3,8 +3,13 @@ using ChessEngine.Domain;
 
 namespace ChessEngine.Console
 {
-    public static class ConsoleMoveInput
+    public static class MoveInputParser
     {
+        /// <summary>
+        /// Parses move and returns 'from' and 'to' squares
+        /// </summary>
+        /// <param name="move">for example a2a4</param>
+        /// <exception cref="FormatException">Input string doesn't correspond to correct format</exception>
         public static (Square from, Square to) ParseMove(string move)
         {
             if (move.Length != 4)
